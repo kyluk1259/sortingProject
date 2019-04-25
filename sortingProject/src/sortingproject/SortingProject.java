@@ -21,7 +21,7 @@ public class SortingProject {
     public static ArrayList<JPanel> bars = new ArrayList();
     public static Random rand = new Random();
     //Set random amount of elements for the array
-    public static int randomInd = rand.nextInt((150 - 10)) + 10;
+    public static int randomInd = rand.nextInt((120 - 10)) + 10;
     public static int arr[] = new int[randomInd];
     public static long start, end;
     public static JFrame window = new JFrame("Visuals");
@@ -29,10 +29,10 @@ public class SortingProject {
     public static JLabel timer = new JLabel();
     public static Border blackline = BorderFactory.createLineBorder(Color.BLACK);
     public static DecimalFormat x = new DecimalFormat("0.000");
-    public static int WIDTH = (int) (1000 / arr.length) * arr.length;
+    public static int WIDTH = (int)(1000 / arr.length) * arr.length;
+    public static int n = arr.length;
 
-    static void printTimes(long vStart, long vEnd, long sortStart, long sortEnd) {
-        int n = arr.length;
+    public static void printTimes(long vStart, long vEnd, long sortStart, long sortEnd) {
         long vTime = (vEnd - vStart);
         long sTime = (sortEnd - sortStart);
         System.out.println("\nTook: " + x.format(((double) sTime / 1000000)) + "ms to sort " + n + " different values");
@@ -62,29 +62,26 @@ public class SortingProject {
         }
 
         //create a copy of the original array for alternate timing
-        int copy[] = arr;
-        int n = arr.length;
-
+        int copy[] = arr.clone();
         
-        //Start visual timer
-        long start = System.nanoTime();
-        paint();
-
-        Quicksort ob = new Quicksort();
-        ob.sort(arr, 0, n - 1);
-        
-        //Get end time of visual sort
-        long end = System.nanoTime();
-
         //Get actual sorting time of array
         long rs = System.nanoTime();
         QuicksortTrue sorted = new QuicksortTrue();
         sorted.sort(copy, 0, n - 1);
         long re = System.nanoTime();
+
+        //Start visual timer
+        long start = System.nanoTime();
+        
+        paint();
+        Quicksort ob = new Quicksort();
+        ob.sort(arr, 0, n - 1);
+        
+        //Get end time of visual sort
+        long end = System.nanoTime();
         
         //Print timings
         printTimes(start, end, rs, re);
-
     }
 
     //Paint original visuals to JFrame
@@ -93,11 +90,18 @@ public class SortingProject {
         //Initialize every "bar" for the JFrame
         for (int i = 0; i < arr.length; i++) {
 
+            try {
+            Thread.sleep(000000002);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            
             bars.get(i).setBackground(Color.WHITE);
             content.add(bars.get(i));
             bars.get(i).setBorder(blackline);
             bars.get(i).setBounds((int) ((WIDTH / arr.length) * i), 500 - arr[i], (int) (WIDTH / arr.length), arr[i]);
             bars.get(i).setVisible(true);
+            bars.get(i).isOptimizedDrawingEnabled();
 
         }
 
@@ -109,32 +113,9 @@ public class SortingProject {
 
         //Must use Thread.sleep() or else there are rendering issues of the visuals
         try {
-            Thread.sleep(50);
+            Thread.sleep(500);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-    }
-
-    //Update visuals on JFrame after each stage of sorting
-    public static void repaint() {
-
-        content.removeAll();
-        for (int i = 0; i < arr.length; i++) {
-
-            bars.get(i).setBackground(Color.WHITE);
-            content.add(bars.get(i));
-            bars.get(i).setBorder(blackline);
-            bars.get(i).setBounds((int) ((WIDTH / arr.length) * i), 500 - arr[i], (int) (WIDTH / arr.length), arr[i]);
-            bars.get(i).setVisible(true);
-      
-        }
-
-        try {
-            Thread.sleep(50);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 }
