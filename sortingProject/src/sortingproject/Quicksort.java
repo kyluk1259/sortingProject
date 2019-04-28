@@ -14,12 +14,12 @@ import static sortingproject.SortingProject.*;
  */
 public class Quicksort {
 
-    public static int pivotVal, pivotInd, j, part, swi;
+    public static int pivotVal, returnInd, j, part, swi;
 
     int partition(int arr[], int min, int size) {
         swi = size;
         pivotVal = arr[size];
-        pivotInd = (min - 1); //the index of the smaller value 
+        returnInd = (min - 1); //the index of the smaller value 
 
         for (j = min; j < size; j++) {
             bars.get(j).isPaintingForPrint();
@@ -32,17 +32,16 @@ public class Quicksort {
 
             // If current value is less than or equal to the pivot, increase by 1
             if (arr[j] <= pivotVal) {
-                pivotInd++;
+                returnInd++;
 
-                // swap arr[pivotInd] and arr[j] 
-                swap(arr, pivotInd, j);
+                // swap arr[returnInd] and arr[j] 
+                swap(arr, returnInd, j);
 
-                bars.get(pivotInd).isPaintingForPrint();
-                bars.get(pivotInd).isOptimizedDrawingEnabled();
-
-                bars.get(pivotInd).setBackground(Color.orange);
+                bars.get(returnInd).isPaintingForPrint();
+                bars.get(returnInd).isOptimizedDrawingEnabled();
+                bars.get(returnInd).setBackground(Color.orange);
                 try {
-                    bars.get(pivotInd).wait(sleep);
+                    bars.get(returnInd).wait(sleep);
                 } catch (Exception e) {
                 }
                 content.updateUI();
@@ -53,11 +52,11 @@ public class Quicksort {
             }
         }
 
-        // swap arr[pivotInd+1] and arr[size]        
-        swap(arr, pivotInd + 1, size);
+        // swap arr[returnInd+1] and arr[size]        
+        swap(arr, returnInd + 1, size);
 
         //return next pivot index 
-        return pivotInd + 1;
+        return returnInd + 1;
     }
 
     void swap(int[] arr, int a, int b) {
@@ -79,11 +78,7 @@ public class Quicksort {
 
             // Recursively sort values of partition and repaint visuals            
             repaint();
-            try {
-                sort(arr, min, part - 1);
-            } catch (StackOverflowError e) {
-                sort(arr, part + 1, size);
-            }
+            sort(arr, min, part - 1);
             sort(arr, part + 1, size);
         }
     }
@@ -92,13 +87,14 @@ public class Quicksort {
     void repaint() {
 
         for (int i = 0; i < bars.size() - 1; i++) {
-
-            bars.get(i).setBackground(Color.white);
-            bars.get(i).setBorder(blackline);
-            bars.get(i).setBounds((int) ((WIDTH / arr.length) * i), 500 - arr[i], (int) (WIDTH / arr.length), arr[i]);
-            bars.get(i).setVisible(true);
+            
             bars.get(i).isOptimizedDrawingEnabled();
             bars.get(j).isPaintingForPrint();
+            bars.get(i).setBackground(Color.white);
+           //bars.get(i).setBorder(blackline);
+            bars.get(i).setBounds((int) ((WIDTH / arr.length) * i), 500 - arr[i], (int) (WIDTH / arr.length), arr[i]);
+            bars.get(i).setVisible(true);
+            
             content.updateUI();
         }
     }

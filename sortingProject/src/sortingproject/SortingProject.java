@@ -20,6 +20,7 @@ import javax.swing.border.Border;
  */
 public class SortingProject {
 
+    public static Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     public static ArrayList<JPanel> bars = new ArrayList();
     public static Random rand = new Random();
     //Set random amount of elements for the array
@@ -33,7 +34,7 @@ public class SortingProject {
     public static JLabel timer = new JLabel();
     public static Border blackline = BorderFactory.createLineBorder(Color.BLACK);
     public static DecimalFormat x = new DecimalFormat("0.000");
-    public static int WIDTH = ((int)(2000/arr.length))*arr.length;
+    public static int WIDTH = ((int)(screen.getWidth()/arr.length))*arr.length;
     public static int n = arr.length;
 
     public static void printTimes(long vStart, long vEnd, long sStart, long sEnd) {
@@ -98,6 +99,16 @@ public class SortingProject {
 
             //Get end time of visual sort
             long end = System.nanoTime();
+            
+            for (int i = 0; i < arr.length; i++) {
+
+            bars.get(i).setBackground(Color.green);
+           // bars.get(i).setBorder(blackline);
+            bars.get(i).setBounds((int)((WIDTH / arr.length) * i), 500 - arr[i], (int) (WIDTH / arr.length), arr[i]);
+            bars.get(i).setVisible(true);
+            bars.get(i).isOptimizedDrawingEnabled();
+            content.updateUI();
+        }
 
             //Print timings
             printTimes(start, end, rs, re);
@@ -112,7 +123,7 @@ public class SortingProject {
 
             bars.get(i).setBackground(Color.WHITE);
             content.add(bars.get(i));
-            bars.get(i).setBorder(blackline);
+           // bars.get(i).setBorder(blackline);
             bars.get(i).setBounds((int)((WIDTH / arr.length) * i), 500 - arr[i], (int) (WIDTH / arr.length), arr[i]);
             bars.get(i).setVisible(true);
             bars.get(i).isOptimizedDrawingEnabled();
@@ -127,7 +138,7 @@ public class SortingProject {
 
         //Must use Thread.sleep() or else there are rendering issues of the visuals
         try {
-            Thread.sleep(sleep*10);
+            Thread.sleep(sleep*2);
         } catch (Exception e) {
             e.printStackTrace();
         }

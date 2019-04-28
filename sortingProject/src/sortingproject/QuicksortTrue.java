@@ -11,25 +11,25 @@ package sortingproject;
  */
 public class QuicksortTrue {
 
-    public static int pivotVal, pivotInd, j, part;
+    public static int pivotVal, returnInd, j, part;
 
     int partition(int arr[], int min, int size) {
         pivotVal = arr[size];
-        pivotInd = (min - 1); //the index of the smaller value 
+        returnInd = (min - 1); //the index of the smaller value 
         for (j = min; j < size; j++) {
             // If current value is less than or equal to the pivot 
             if (arr[j] <= pivotVal) {
-                pivotInd++;
+                returnInd++;
 
                 // swap arr[i] and arr[j] 
-                swap(arr, pivotInd, j);
+                swap(arr, returnInd, j);
             }
         }
 
-        // swap arr[pivotInd+1] and arr[size] 
-        swap(arr, pivotInd + 1, size);
+        // swap arr[returnInd+1] and arr[size] 
+        swap(arr, returnInd + 1, size);
 
-        return pivotInd + 1;
+        return returnInd + 1;
     }
 
     void swap(int[] arr, int a, int b) {
@@ -40,6 +40,7 @@ public class QuicksortTrue {
 
     //Main function that recursively calls itself() 
     void sort(int arr[], int min, int size) {
+
         if (min < size) {
             // part is the partitioning index, arr[part] should go to correect place 
             part = partition(arr, min, size);
@@ -47,6 +48,7 @@ public class QuicksortTrue {
             // Recursively sort values of partition 
             sort(arr, min, part - 1);
             sort(arr, part + 1, size);
+
         }
     }
 }
