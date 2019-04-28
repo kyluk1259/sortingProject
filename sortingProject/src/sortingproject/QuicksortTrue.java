@@ -38,7 +38,7 @@ public class QuicksortTrue {
         arr[b] = temp;
     }
 
-    //Main function that recursively calls QuickSort() 
+    //Main function that recursively calls itself() 
     void sort(int arr[], int min, int size) {
         if (min < size) {
             // part is the partitioning index, arr[part] should go to correect place 
@@ -47,7 +47,6 @@ public class QuicksortTrue {
             // Recursively sort values of partition 
             sort(arr, min, part - 1);
             sort(arr, part + 1, size);
-           
         }
     }
 }

@@ -23,17 +23,17 @@ public class SortingProject {
     public static ArrayList<JPanel> bars = new ArrayList();
     public static Random rand = new Random();
     //Set random amount of elements for the array
-    public static int randomInd = Integer.parseInt(JOptionPane.showInputDialog("How many elements?"));
+    public static int ind = Integer.parseInt(JOptionPane.showInputDialog("How many elements?"));
     public static int disp = Integer.parseInt(JOptionPane.showInputDialog("Just Sort or Visualize?"));
     public static long sleep;
-    public static int arr[] = new int[randomInd];
+    public static int arr[] = new int[ind];
     public static long start, end;
     public static JFrame window = new JFrame("Visuals");
     public static JPanel content = new JPanel();
     public static JLabel timer = new JLabel();
     public static Border blackline = BorderFactory.createLineBorder(Color.BLACK);
     public static DecimalFormat x = new DecimalFormat("0.000");
-    public static int WIDTH = (int) arr.length * 4;
+    public static int WIDTH = ((int)(2000/arr.length))*arr.length;
     public static int n = arr.length;
 
     public static void printTimes(long vStart, long vEnd, long sStart, long sEnd) {
@@ -49,6 +49,10 @@ public class SortingProject {
     public static void main(String args[]) {
 
         if (disp == 0) {
+            for (int i = 0; i < arr.length; i++) {
+                int randomValue = rand.nextInt((500 - 1) + 1) + 1;
+                arr[i] = randomValue;
+            }
             long rs = System.nanoTime();
             QuicksortTrue sorted = new QuicksortTrue();
             sorted.sort(arr, 0, n - 1);
@@ -56,6 +60,7 @@ public class SortingProject {
             long tot = re - rs;
             System.out.println("\nTook: " + x.format(((double) tot / 1000000)) + "ms to sort " + n + " different values");
             System.out.println("Took: " + tot + "ns to sort " + n + " different values");
+            System.exit(0);
         } else {
 
             sleep = Long.parseLong(JOptionPane.showInputDialog("Sleep Time?"));
@@ -108,7 +113,7 @@ public class SortingProject {
             bars.get(i).setBackground(Color.WHITE);
             content.add(bars.get(i));
             bars.get(i).setBorder(blackline);
-            bars.get(i).setBounds((int) ((WIDTH / arr.length) * i), 500 - arr[i], (int) (WIDTH / arr.length), arr[i]);
+            bars.get(i).setBounds((int)((WIDTH / arr.length) * i), 500 - arr[i], (int) (WIDTH / arr.length), arr[i]);
             bars.get(i).setVisible(true);
             bars.get(i).isOptimizedDrawingEnabled();
 

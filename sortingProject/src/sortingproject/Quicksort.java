@@ -29,14 +29,14 @@ public class Quicksort {
                 bars.get(j).wait(sleep);
             } catch (Exception e) {
             }
-            
+
             // If current value is less than or equal to the pivot, increase by 1
             if (arr[j] <= pivotVal) {
                 pivotInd++;
 
                 // swap arr[pivotInd] and arr[j] 
                 swap(arr, pivotInd, j);
-                
+
                 bars.get(pivotInd).isPaintingForPrint();
                 bars.get(pivotInd).isOptimizedDrawingEnabled();
 
@@ -79,7 +79,11 @@ public class Quicksort {
 
             // Recursively sort values of partition and repaint visuals            
             repaint();
-            sort(arr, min, part - 1);
+            try {
+                sort(arr, min, part - 1);
+            } catch (StackOverflowError e) {
+                sort(arr, part + 1, size);
+            }
             sort(arr, part + 1, size);
         }
     }
